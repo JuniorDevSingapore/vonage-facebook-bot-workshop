@@ -31,14 +31,27 @@ function sendMessage(sender, recipient, text) {
 app.post('/inbound', function(request, response) {
   // console.log(request.body)
 
-  messages.insert(request.body, function (error, record) {
-    if (error) {
-      sendMessage(request.body.to.id, request.body.from.id, 'Sorry! There was a problem.')
-      return console.error(error)
-    }
-    sendMessage(request.body.to.id, request.body.from.id, 'Thanks for your message!')
-    console.log(record)
-  })
+  if (request.body.message.content.text.toLowerCase().trim() === 'recap') {
+    messages.find({'from.id': request.body.from.id }, function (error, records){
+      if (error) { return console.error(error) }
+      console.log(records)
+
+      const message = records.map(function(record) {
+        return record.message.content.text + ' (sent at ' + record.timestamp + ')'
+      }).join('\n\n')
+      sendMessage(request.body.to.id, request.body.from.id, message)
+    })
+  } else {
+    messages.insert(request.body, function (error, record) {
+      if (error) {
+        sendMessage(request.body.to.id, request.body.from.id, 'Sorry! There was a problem.')
+        return console.error(error)
+      }
+      sendMessage(request.body.to.id, request.body.from.id, 'Thanks for your message!')
+      console.log(record)
+    })
+  }
+
   response.send('ok')
 })
 
