@@ -1,4 +1,6 @@
-# Facebook Messenger Bot Tutorial
+# Vonage Facebook Messenger Bot Workshop
+
+Event: <https://www.meetup.com/Junior-Developers-Singapore/events/276101622/>
 
 Sign up for a Vonage API account at https://dashboard.nexmo.com and use coupon code 21RDESJ for €10 of free credits. You’ll also need a Facebook account and Node.js for this workshop :) skip straight to it: https://dashboard.nexmo.com/coupons
 
