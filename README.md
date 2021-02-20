@@ -14,3 +14,4 @@ Sign up for a Vonage API account at https://dashboard.nexmo.com and use coupon c
     - `https://<ngrok URL>/status`
 6. npm init -y
 7. npm install express body-parser nedb @vonage/server-sdk@beta
+8. Copy `env.sample` to `.env` and update the values.
