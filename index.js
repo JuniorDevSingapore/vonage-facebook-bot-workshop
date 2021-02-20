@@ -18,7 +18,14 @@ const vonage = new Vonage({
 })
 
 function sendMessage(sender, recipient, text) {
+  const to = { type: 'messenger', id: recipient }
+  const from = { type: 'messenger', id: sender }
+  const message = { content: { type: 'text', text: text } }
 
+  vonage.channel.send(to, from, message, function(error, result) {
+    if(error) { return console.error(error) }
+    console.log(result)
+  })
 }
 
 app.post('/inbound', function(request, response) {
@@ -26,8 +33,10 @@ app.post('/inbound', function(request, response) {
 
   messages.insert(request.body, function (error, record) {
     if (error) {
+      sendMessage(request.body.to.id, request.body.from.id, 'Sorry! There was a problem.')
       return console.error(error)
     }
+    sendMessage(request.body.to.id, request.body.from.id, 'Thanks for your message!')
     console.log(record)
   })
   response.send('ok')
