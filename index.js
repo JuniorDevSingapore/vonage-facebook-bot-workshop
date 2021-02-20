@@ -34,7 +34,7 @@ app.post('/inbound', function(request, response) {
   if (request.body.message.content.text.toLowerCase().trim() === 'recap') {
     messages.find({'from.id': request.body.from.id }, function (error, records){
       if (error) { return console.error(error) }
-      console.log(records)
+      // console.log(records)
 
       const message = records.map(function(record) {
         return record.message.content.text + ' (sent at ' + record.timestamp + ')'
@@ -48,7 +48,7 @@ app.post('/inbound', function(request, response) {
         return console.error(error)
       }
       sendMessage(request.body.to.id, request.body.from.id, 'Thanks for your message!')
-      console.log(record)
+      // console.log(record)
     })
   }
 
@@ -56,8 +56,7 @@ app.post('/inbound', function(request, response) {
 })
 
 app.post('/status', function(request, response) {
-  // console.log(request.body)
-
+  console.log(request.body)
   response.send('ok')
 })
 
